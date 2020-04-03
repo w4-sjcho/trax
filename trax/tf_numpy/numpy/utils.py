@@ -75,6 +75,8 @@ def finfo(dtype):
 def isscalar(val):
   """Returns whether `val` is a scalar value or scalar Tensor."""
   if isinstance(val, (np.ndarray, arrays.ndarray, tf.Tensor)):
+    if val.shape is None:
+      return False
     return len(val.shape) == 0  # pylint: disable=g-explicit-length-test
   return np.isscalar(val)
 
