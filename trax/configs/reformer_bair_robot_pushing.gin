@@ -21,17 +21,11 @@ import trax.supervised.trainer_lib
 # Parameters that will vary between experiments:
 # ==============================================================================
 train.model = @trax.models.ReformerLM
-attn_type = @TimeBinCausalAttention
-share_qk = False  # LSHCausalAttention ignores this flag and always shares q & k
+attn_type = @SelfAttention
+share_qk = False
 attn_kv = 64
 n_layers = 3
 dropout = 0.0
-
-# MemoryEfficientCausalAttention: full attention
-# (no hparams to vary between experiments)
-
-# TimeBinCausalAttention: attend to nearby items
-TimeBinCausalAttention.bin_length = 512
 
 # Parameters for batch_fn:
 # ==============================================================================
@@ -74,11 +68,10 @@ train.steps = 100000
 train.save_graphs = False
 train.has_weights = True
 
-# Parameters for TimeBinCausalAttention:
+# Parameters for SelfAttention:
 # ==============================================================================
-TimeBinCausalAttention.dropout = 0.1
-# TimeBinCausalAttention.n_bins: see top
-TimeBinCausalAttention.share_qk = %share_qk
+SelfAttention.chunk_len = 128
+SelfAttention.n_chunks_before = 1
 
 # Parameters for ReformerLM:
 # ==============================================================================
